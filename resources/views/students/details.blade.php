@@ -32,7 +32,7 @@
     </div>
 @endif
 
-<form action="{{route('ustudent.details',$students->id)}}" method='POST' >
+<form action="{{route('student.details',$students->id)}}" method='POST' >
     @csrf
 
     

@@ -46,6 +46,7 @@
             <th>Full Name</th>
             <th>Email</th>
             <th>Phone</th>
+            <th>Add/Edit Details</th>
             <th>Action</th>
         </tr>
         @foreach($students_data  as $student)
@@ -59,6 +60,10 @@
             <td>{{$student->email}}</td>
 
             <td>{{$student->phone}}</td>
+
+            <td>
+            <a class="btn btn-primary" href="{{route('student.details',$student->id)}}">Edit</a>
+            </td>
             <td>
               
        

@@ -90,7 +90,7 @@ class StudentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(students  $students ,Request $request)
+    public function update(students $students, Request $request)
     {
         $students = students::update([
             'fullname'=>$request->fullname,
@@ -134,8 +134,31 @@ class StudentsController extends Controller
     }
 
 
-    public function updatedetails(){
-        
+    public function updatedetails(students $request ,$student_id){
+        $students = students::findOrFail($student_id);
+      
+      
+
+        $students->StudentDetail()-> updateOrCreate
+        (
+
+            [
+                'student_id' => $student_id,
+            ],
+            
+            [
+          
+            'alter_phone' => $request->alter_phone,
+            'course' => $request->course,
+            'roll_number' => $request->roll_number,
+
+
+        ]
+    
+    );
+
+
+       return redirect('students')->with('message', 'updated succrssfully');
     }
 
 }
