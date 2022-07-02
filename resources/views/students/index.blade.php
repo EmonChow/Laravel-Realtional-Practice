@@ -12,7 +12,12 @@
     <title>Task_one</title>
 </head>
 <body>
-    
+<style>
+        .pagination{
+            float: right;
+            margin-top: 10px;
+        }
+</style>
 
 
 
@@ -22,8 +27,10 @@
                 <h2> MY TASK ONE </h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href=""> Create New Student</a>
+                <a class="btn btn-success" href="{{route('students.create')}}"> Create New Student</a>
             </div>
+          
+
         </div>
     </div>
   
@@ -41,27 +48,29 @@
             <th>Phone</th>
             <th>Action</th>
         </tr>
-    
+        @foreach($students_data  as $student)
         <tr>
-             <td>1</td>
-            <td>Emon Chowdhury <br>
+          
+             <td>{{$student->id}}</td>
+            <td>{{$student->fullname}} <br>
          
 
             </td>
-            <td>Emonchowdhury@gmail.com</td>
+            <td>{{$student->email}}</td>
 
-            <td>01648043376</td>
+            <td>{{$student->phone}}</td>
             <td>
-                 <a class="btn btn-info" href="">Show</a>
+              
        
-                    <a class="btn btn-primary" href="">Edit</a>
-                <form action="" method="get">
+                    <a class="btn btn-primary" href="{{route('student.edit',$student->id)}}">Edit</a>
+                <form action="{{route('students.delete',$student->id)}}" method="get">
    
                     @csrf
              
                     <button type="submit"  class="btn btn-danger">Delete</button>
                 </form>
             </td>
+            @endforeach
         </tr>
    
 
@@ -83,7 +92,7 @@
 
 
     </table>
-
- 
+  
+  
 </body>
 </html>

@@ -14,8 +14,11 @@ class StudentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
-        return view('students.index');
+        $students_data = students::all();
+
+        return view('students.index',compact('students_data'));
     }
 
     /**
@@ -41,7 +44,7 @@ class StudentsController extends Controller
             'email'=>$request->email,
             'phone'=>$request->phone,
         ]);
-        // $students->StudentDetails()->save( $students);
+      
 
         $students->StudentDetail()->create([
           
@@ -64,21 +67,21 @@ class StudentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
-
+ 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(students $students)
     {
-        //
-    }
+        //  $students= StudentDetails::find($id);
+        //  $students['students'] = students::all();
+        //  $students['student_details'] = StudentDetails::all();
+      
+        return view('students.edit',compact('students'));
+     }
 
     /**
      * Update the specified resource in storage.
@@ -87,9 +90,27 @@ class StudentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(students  $students ,Request $request)
     {
-        //
+        $students = students::update([
+            'fullname'=>$request->fullname,
+            'email'=>$request->email,
+            'phone'=>$request->phone,
+        ]);
+      
+
+        $students->StudentDetail()->update([
+          
+            'alter_phone' => $request->alter_phone,
+            'course' => $request->course,
+            'roll_number' => $request->roll_number,
+
+
+        ]);
+
+
+       return redirect('students')->with('message', 'updated succrssfully');
+
     }
 
     /**
@@ -98,8 +119,23 @@ class StudentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(students $students)
     {
-        //
+       $students ->delete();
+       return redirect('students')->with('message', 'deleted succrssfully');
     }
+
+
+
+
+    public function details($student_id){
+        $students = students::findOrFail($student_id)->StudentDetail;
+        return view('student.details', compact('students'));
+    }
+
+
+    public function updatedetails(){
+        
+    }
+
 }
