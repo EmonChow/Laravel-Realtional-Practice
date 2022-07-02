@@ -76,9 +76,7 @@ class StudentsController extends Controller
      */
     public function edit(students $students)
     {
-        //  $students= StudentDetails::find($id);
-        //  $students['students'] = students::all();
-        //  $students['student_details'] = StudentDetails::all();
+        
       
         return view('students.edit',compact('students'));
      }
@@ -91,15 +89,14 @@ class StudentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(students $students, Request $request)
-    {
-        $students = students::update([
+    { 
+      $students =students::update([
             'fullname'=>$request->fullname,
             'email'=>$request->email,
             'phone'=>$request->phone,
         ]);
       
-
-        $students->StudentDetail()->update([
+      $students->StudentDetail()->update([
           
             'alter_phone' => $request->alter_phone,
             'course' => $request->course,
@@ -121,16 +118,17 @@ class StudentsController extends Controller
      */
     public function destroy(students $students)
     {
-       $students ->delete();
+       $students->delete();
        return redirect('students')->with('message', 'deleted succrssfully');
     }
 
 
 
 
-    public function details($student_id){
+    public function details ( $student_id)
+    {
         $students = students::findOrFail($student_id)->StudentDetail;
-        return view('student.details', compact('students'));
+        return view('students.details', compact('students'));
     }
 
 
@@ -139,11 +137,11 @@ class StudentsController extends Controller
       
       
 
-        $students->StudentDetail()-> updateOrCreate
+        $students->StudentDetail()->updateOrCreate
         (
 
             [
-                'student_id' => $student_id,
+                'student_id' => $student_id
             ],
             
             [
